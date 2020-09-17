@@ -13,23 +13,25 @@ func main() {
 	myApp := app.New()
 	myWindow := myApp.NewWindow("Timer")
 
-	text1 := canvas.NewText("Hello. Time to next exercise: ", color.White)
-	text2 := canvas.NewText("30 minutes.", color.White)
+	hello := canvas.NewText("Hello. Time to next exercise: ", color.White)
+	timeLeft := canvas.NewText("30 minutes.", color.White)
  	progress := widget.NewProgressBar()
- 	progress.Max = 30.0
+ 	progress.Max = 180.0
 
-	button := widget.NewButton("Start", func() {
-		for i := 0.0; i <= 3.0; i += 0.1 {
+	start := widget.NewButton("Start", func() {
+		for i := 0.0; i <= 180.0; i += 0.1 {
 			time.Sleep(time.Second)
 			progress.SetValue(i)
-			tmp := 30.0 - i
-			text2.Text = strconv.Itoa(int(tmp))
-			text2.Refresh()
+			tmp := (180.0 - i)*10
+			if(int(tmp) % 60) == 0 {
+				timeLeft.Text = strconv.Itoa(int(tmp / 60))
+			}
+			timeLeft.Refresh()
 
 		}
 	})
 
-	myWindow.SetContent(widget.NewHBox(widget.NewVBox(text1, progress),
-		widget.NewVBox(text2, button)))
+	myWindow.SetContent(widget.NewHBox(widget.NewVBox(hello, progress),
+		widget.NewVBox(timeLeft, start)))
 	myWindow.ShowAndRun()
 }
