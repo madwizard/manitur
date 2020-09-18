@@ -24,7 +24,11 @@ func main() {
 			progress.SetValue(i)
 			tmp := (180.0 - i)*10
 			if(int(tmp) % 60) == 0 {
-				timeLeft.Text = strconv.Itoa(int(tmp / 60))
+				if int(tmp) == 60 {
+					timeLeft.Text =  "1 minutes."
+				} else {
+					timeLeft.Text = strconv.Itoa(int(tmp/60)) + " minutes."
+				}
 			}
 			timeLeft.Refresh()
 
